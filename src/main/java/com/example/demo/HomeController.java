@@ -9,7 +9,7 @@ public class HomeController {
 
 	@RequestMapping("/")
 	public String home() {
-		return "Home Page";
+		return "Hello Spring Boot Workspace";
 	}
 	
 }
