@@ -2,20 +2,24 @@ pipeline {
     agent any
 
     stages {
-        stage('Build') {
+    
+    stage('Build Application') {
             steps {
-                echo 'Building..'
+                sh 'clean build'
+            }
+            post {
+                success {
+                    echo "Now Archiving the Artifacts...."
+                    archiveArtifacts artifacts: 'build/libs/*.war'
+                }
             }
         }
-        stage('Test') {
+        
+         Stage('Create Tomcat Docker Image'){
             steps {
-                echo 'Testing..'
+                sh "docker build . -t tomcatsamplewebapp:${env.BUILD_ID}"
             }
         }
-        stage('Deploy') {
-            steps {
-                echo 'Deploying....'
-            }
-        }
+
     }
 }
